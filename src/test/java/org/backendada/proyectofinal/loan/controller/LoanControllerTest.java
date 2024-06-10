@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import java.time.LocalDate;
 
-@WebMvcTest(LoanController.class)
+@WebMvcTest(AdminLoanController.class)
 public class LoanControllerTest {
 
     @Autowired
@@ -89,7 +89,7 @@ public class LoanControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        mockMvc.perform(get("/api/loan"))
+        mockMvc.perform(get("/api/admin/loan"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].userId").value(1))
                 .andExpect(jsonPath("$[0].bookId").value(1))
@@ -105,7 +105,7 @@ public class LoanControllerTest {
         when(loanRepository.findById(1L)).thenReturn(Optional.of(loan));
         when(loanRepository.save(loan)).thenReturn(loan);
 
-        mockMvc.perform(put("/api/loan/1")
+        mockMvc.perform(put("/api/admin/loan/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loan)))
                 .andExpect(status().isOk())
@@ -129,7 +129,7 @@ public class LoanControllerTest {
 
         when(loanRepository.save(newLoan)).thenReturn(newLoan);
 
-        mockMvc.perform(post("/api/loan")
+        mockMvc.perform(post("/api/admin/loan")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newLoan)))
                 .andExpect(status().isOk());
@@ -143,7 +143,7 @@ public class LoanControllerTest {
     public void testDelete() throws Exception {
         when(loanRepository.findById(1L)).thenReturn(Optional.of(loan));
 
-        mockMvc.perform(delete("/api/loan/1"))
+        mockMvc.perform(delete("/api/admin/loan/1"))
                 .andExpect(status().isOk());
 
         verify(loanRepository).findById(1L);
@@ -156,7 +156,7 @@ public class LoanControllerTest {
     public void testDeleteNotFound() throws Exception {
         when(loanRepository.findById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(delete("/api/loan/1"))
+        mockMvc.perform(delete("/api/admin/loan/1"))
                 .andExpect(status().isNotFound());
 
         verify(loanRepository).findById(1L);

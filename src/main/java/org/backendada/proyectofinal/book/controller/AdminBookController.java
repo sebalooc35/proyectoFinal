@@ -1,5 +1,6 @@
 package org.backendada.proyectofinal.book.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.backendada.proyectofinal.book.entity.Book;
 import org.backendada.proyectofinal.book.exception.ResourceNotFoundException;
 import org.backendada.proyectofinal.book.repository.BookRepository;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books")
-public class BookController {
-    @Autowired
-    private BookRepository bookRepository;
+@RequestMapping("/api/admin/books")
+@RequiredArgsConstructor
+public class AdminBookController {
+
+    private final BookRepository bookRepository;
 
     @GetMapping
     public List<Book> getAllBooks() {

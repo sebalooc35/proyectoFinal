@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Entity
 public class Loan {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
     private Long bookId;
     private Long userId;

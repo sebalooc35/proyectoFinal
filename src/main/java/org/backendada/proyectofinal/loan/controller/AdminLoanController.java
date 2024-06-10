@@ -4,7 +4,6 @@ import org.backendada.proyectofinal.book.exception.ResourceNotFoundException;
 import org.backendada.proyectofinal.book.repository.BookRepository;
 import org.backendada.proyectofinal.loan.entity.Loan;
 import org.backendada.proyectofinal.loan.repository.LoanRepository;
-import org.backendada.proyectofinal.user.entity.User;
 import org.backendada.proyectofinal.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/loan")
-public class LoanController {
+@RequestMapping("api/admin/loan")
+public class AdminLoanController {
 
     @Autowired
     LoanRepository loanRepository;

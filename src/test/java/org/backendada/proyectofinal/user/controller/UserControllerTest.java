@@ -1,6 +1,7 @@
 package org.backendada.proyectofinal.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.backendada.proyectofinal.book.controller.AdminBookController;
 import org.backendada.proyectofinal.user.entity.User;
 import org.backendada.proyectofinal.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
+@WebMvcTest(AdminBookController.class)
 public class UserControllerTest {
 
     @Autowired
@@ -52,7 +53,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        mockMvc.perform(get("/api/user"))
+        mockMvc.perform(get("/api/admin/user"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Name"))
                 .andExpect(jsonPath("$[0].password").value("Password"))
@@ -64,7 +65,7 @@ public class UserControllerTest {
     @Test
     public void testUpdate() throws Exception {
         user.setName("New Name");
-        mockMvc.perform(put("/api/user/1")
+        mockMvc.perform(put("/api/admin/user/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
@@ -84,7 +85,7 @@ public class UserControllerTest {
 
         when(userRepository.save(newUser)).thenReturn(newUser);
 
-        mockMvc.perform(post("/api/user")
+        mockMvc.perform(post("/api/admin/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newUser)))
                 .andExpect(status().isOk());
@@ -99,7 +100,7 @@ public class UserControllerTest {
     public void testDelete() throws Exception {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        mockMvc.perform(delete("/api/user/1"))
+        mockMvc.perform(delete("/api/admin/user/1"))
                 .andExpect(status().isOk());
 
         verify(userRepository).findById(1L);
@@ -113,7 +114,7 @@ public class UserControllerTest {
     public void testDeleteNotFound() throws Exception {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(delete("/api/user/1"))
+        mockMvc.perform(delete("/api/admin/user/1"))
                 .andExpect(status().isNotFound());
 
         verify(userRepository).findById(1L);

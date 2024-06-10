@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.Optional;
 
-@WebMvcTest(BookController.class)
+@WebMvcTest(AdminBookController.class)
 public class BookControllerTest {
 
     @Autowired
@@ -55,7 +55,7 @@ public class BookControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        mockMvc.perform(get("/api/books"))
+        mockMvc.perform(get("/api/admin/books"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Book Title"))
                 .andExpect(jsonPath("$[0].author").value("Author"))
@@ -67,7 +67,7 @@ public class BookControllerTest {
     @Test
     public void testUpdate() throws Exception {
         book.setAuthor("Pepe");
-        mockMvc.perform(put("/api/books/1")
+        mockMvc.perform(put("/api/admin/books/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isOk())
@@ -87,7 +87,7 @@ public class BookControllerTest {
 
         when(bookRepository.save(newBook)).thenReturn(newBook);
 
-        mockMvc.perform(post("/api/books")
+        mockMvc.perform(post("/api/admin/books")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newBook)))
                 .andExpect(status().isOk());
@@ -102,7 +102,7 @@ public class BookControllerTest {
     public void testDelete() throws Exception {
         when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
 
-        mockMvc.perform(delete("/api/books/1"))
+        mockMvc.perform(delete("/api/admin/books/1"))
                 .andExpect(status().isOk());
 
         verify(bookRepository).findById(1L);
@@ -116,7 +116,7 @@ public class BookControllerTest {
     public void testDeleteNotFound() throws Exception {
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(delete("/api/books/1"))
+        mockMvc.perform(delete("/api/admin/books/1"))
                 .andExpect(status().isNotFound());
 
         verify(bookRepository).findById(1L);

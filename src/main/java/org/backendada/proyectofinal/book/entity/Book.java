@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
     private String title;
     private String author;

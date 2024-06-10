@@ -1,20 +1,20 @@
 package org.backendada.proyectofinal.user.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.backendada.proyectofinal.book.exception.ResourceNotFoundException;
 import org.backendada.proyectofinal.user.entity.User;
 import org.backendada.proyectofinal.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/user")
-public class UserController {
+@RequestMapping("api/admin/user")
+@RequiredArgsConstructor
+public class AdminUserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @GetMapping
     public List<User> getAllUsers() {
